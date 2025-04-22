@@ -1,14 +1,13 @@
 import os
 from datetime import datetime
 
-# ===== CONFIGURAÇÕES INICIAIS =====
 LIMITE_SAQUE = 500
 LIMITE_SAQUES_DIARIOS = 3
 extrato = []
 saldo = 0
 numero_saques = 0
 
-# ===== FUNÇÕES DE SUPORTE =====
+# ===== FUNÇÕES PARA UTILIZAÇÃO =====
 
 def limpar_tela():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -46,7 +45,7 @@ def confirmar_saida():
     confirma = input("Deseja realmente sair? (s/n): ").strip().lower()
     return confirma == 's'
 
-# ===== MENU INTERATIVO =====
+# ===== MENU INTERATIVO DE APRESENTAÇÃO =====
 
 menu = """
 Escolha uma opção:
