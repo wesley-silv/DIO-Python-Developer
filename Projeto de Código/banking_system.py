@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 
-LIMITE_SAQUE = 500
+LIMITE_SAQUE = 2000
 LIMITE_SAQUES_DIARIOS = 3
 extrato = []
 saldo = 0
@@ -32,7 +32,7 @@ def registrar_movimentacao(tipo, valor):
     extrato.append(f"{data} - {tipo}: R$ {valor:.2f}")
 
 def mostrar_extrato():
-    print("\n📄 EXTRATO".center(50, "="))
+    print("\n📄 EXTRATO  ".center(50, "="))
     if not extrato:
         print("Nenhuma movimentação registrada até o momento.")
     else:
@@ -50,10 +50,10 @@ def confirmar_saida():
 menu = """
 Escolha uma opção:
 
-[d] Depositar   - Adicionar dinheiro à sua conta
-[s] Sacar       - Retirar dinheiro (limite de R$500 por saque)
-[e] Extrato     - Ver todas as movimentações
-[q] Sair        - Encerrar sessão
+[d] Depósito                   - Depositar dinheiro na sua conta
+[s] Saque                      - Sacar dinheiro da sua conta (limite de R$2.000,00 total)
+[e] Extrato                    - Visualizar operações
+[f] Encerrar operação          - Encerrar sessão e sair
 
 => """
 
