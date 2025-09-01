@@ -1,50 +1,50 @@
 import subprocess
 
-# Nome da interface de rede - edite conforme sua máquina
+# Name of network interface - edit according your machine
 INTERFACE = "Wi-Fi"
 
-# Configurações fixas
+# Fixe configurations
 ips = ["192.168.0.23", "192.168.10.23", "192.168.1.10"]
 gateway = "192.168.10.254"
 dns = ["8.8.8.8", "8.8.4.4"]
 
 def run_cmd(cmd):
-    """Executa comandos do Windows e exibe no console"""
+    """Executing commands in Windows and show results in console"""
     print(f"🔹 Executando: {cmd}")
     subprocess.run(cmd, shell=True)
 
-def configurar_ip():
-    """Configura IPs estáticos e DNS"""
+def set_ip():
+    """Set IPs statical and DNS"""
     print("\n📌 Aplicando configurações manuais...")
     
-    # Primeiro limpa qualquer configuração anterior
-    resetar_dhcp(silent=True)
+    # Clean previously configurations 
+    default_dhcp(silent=True)
 
-    # Primeiro IP com gateway
+    # First IP with Gateway
     run_cmd(f'netsh interface ip set address name="{INTERFACE}" static {ips[0]} 255.255.255.0 {gateway} 1')
 
-    # Define DNS primário e secundário
+    # Define DNS primary and secondary
     run_cmd(f'netsh interface ip set dns name="{INTERFACE}" static {dns[0]}')
     run_cmd(f'netsh interface ip add dns name="{INTERFACE}" {dns[1]} index=2')
 
-    # IPs adicionais sem gateway
+    # IPs additionals without Gateway
     for ip in ips[1:]:
         run_cmd(f'netsh interface ip add address name="{INTERFACE}" {ip} 255.255.255.0')
 
-    print("\n✅ Configurações aplicadas com sucesso!")
+    print("\n✅ Configurações aplicadas com sucesso para IP fixo!")
 
-def resetar_dhcp(silent=False):
-    """Restaura rede para DHCP"""
+def default_dhcp(silent=False):
+    """Return for DHCP default"""
     if not silent:
         print("\n📌 Restaurando DHCP...")
     run_cmd(f'netsh interface ip set address name="{INTERFACE}" source=dhcp')
     run_cmd(f'netsh interface ip set dns name="{INTERFACE}" source=dhcp')
     if not silent:
-        print("\n✅ Configurações resetadas para DHCP.")
+        print("\n✅ Configurações aplicadas com sucesso para DHCP padrão!")
 
 def menu():
-    """Exibe menu principal"""
-    print("\n===== Automação de Configuração de Rede =====")
+    """Show main menu"""
+    print("\n===== Automação Para Configuração De Rede =====")
     print("1 - Aplicar configuração manual (IP fixo)")
     print("2 - Restaurar para DHCP (padrão)")
     print("0 - Sair")
@@ -55,11 +55,11 @@ if __name__ == "__main__":
         escolha = input("\nEscolha a opção: ")
 
         if escolha == "1":
-            configurar_ip()
+            set_ip()
         elif escolha == "2":
-            resetar_dhcp()
+            default_dhcp()
         elif escolha == "0":
-            print("\n👋 Encerrando script.")
+            print("\n✅ Encerrando automação para configuração de rede.")
             break
         else:
-            print("❌ Opção inválida. Tente novamente.")
+            print("❌ Opção inválida! Por favor tente novamente.")
